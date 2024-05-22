@@ -16,10 +16,11 @@ use Yii;
  *
  * @property Status $status
  * @property Tables $table
- * @property Users $user
+ * @property User $user
  */
 class Bookings extends \yii\db\ActiveRecord
 {
+    
     /**
      * {@inheritdoc}
      */
@@ -37,8 +38,9 @@ class Bookings extends \yii\db\ActiveRecord
             [['user_id', 'table_id', 'date', 'time', 'status_id'], 'required'],
             [['user_id', 'table_id', 'status_id'], 'integer'],
             [['date', 'time'], 'safe'],
+            
             [['table_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tables::class, 'targetAttribute' => ['table_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
         ];
     }
@@ -51,10 +53,12 @@ class Bookings extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'table_id' => 'Table ID',
-            'date' => 'Date',
-            'time' => 'Time',
+            'table_id' => 'Столик',
+            'date' => 'Дата',
+            'time' => 'Время',
             'status_id' => 'Status ID',
+            'status' => 'Статус',
+            'table' => 'Столик'
         ];
     }
 
@@ -85,6 +89,6 @@ class Bookings extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }

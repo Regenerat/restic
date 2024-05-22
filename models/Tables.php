@@ -16,6 +16,10 @@ use Yii;
  */
 class Tables extends \yii\db\ActiveRecord
 {
+    public function __toString(){
+        return $this->name;
+    }
+
     /**
      * {@inheritdoc}
      */
